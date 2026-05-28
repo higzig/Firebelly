@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="Firebelly Pizza — Neapolitan sourdough. 48-hour ferment. 90 seconds in the fire. Find us, order ahead, book your event.">
+  <title>Firebelly Pizza</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Josefin+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       DESKTOP SIDEBAR — hidden on mobile, positioned fixed on desktop.
+       Content rendered by app.js from config.
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <aside class="desktop-sidebar" id="desktopSidebar">
+    <div class="ds-brand">
+      <p class="ds-eyebrow">Food truck minisite</p>
+      <h2 class="ds-name" id="dsBrandName"></h2>
+      <p class="ds-tagline" id="dsBrandTagline"></p>
+    </div>
+
+    <div class="ds-status" id="dsStatus"></div>
+
+    <nav class="ds-nav" aria-label="Quick navigation">
+      <a href="#menu"   class="ds-nav-link">View menu</a>
+      <a href="#today"  class="ds-nav-link">Find us today</a>
+      <a href="#order"  class="ds-nav-link">Pre-order</a>
+      <a href="#events" class="ds-nav-link">Private event</a>
+      <a href="#social" class="ds-nav-link">Reviews</a>
+    </nav>
+
+    <p class="ds-mark" aria-hidden="true">🔥</p>
+  </aside>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       HERO
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="panel" id="hero">
+    <div class="hero-bg" id="heroBg" aria-hidden="true"></div>
+    <div class="hero-content">
+      <div class="hero-badge" id="heroBadge" aria-live="polite"></div>
+      <h1 class="hero-title" id="heroTitle"></h1>
+      <p class="hero-sub" id="heroSub"></p>
+      <div class="hero-actions">
+        <a href="#menu" class="btn-fire">View menu</a>
+        <a href="#today" class="btn-ghost">Find us today</a>
+      </div>
+      <p class="hero-scroll-hint" aria-hidden="true">Swipe to explore</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       FIND US / SCHEDULE
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="panel" id="today">
+    <div class="today-inner">
+      <p class="section-eyebrow">Where to find us</p>
+      <h2 class="today-heading">Today &amp;<br><em>this week</em></h2>
+
+      <!-- Today's location — rendered by app.js -->
+      <div id="scheduleToday"></div>
+
+      <!-- Upcoming stops — rendered by app.js -->
+      <div id="scheduleUpcoming"></div>
+
+      <!-- Stats strip — rendered by app.js -->
+      <div class="why-strip" id="statsStrip"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       MENU
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="panel" id="menu">
+    <div class="menu-hero-img" aria-hidden="true">
+      <h2 class="menu-hero-title">The <em>menu</em></h2>
+    </div>
+
+    <!-- Tabs — rendered by app.js; click handled via event delegation -->
+    <nav class="menu-tabs" id="menuTabs" aria-label="Menu categories" role="tablist"></nav>
+
+    <!-- Item panels — rendered by app.js; clicks handled via event delegation -->
+    <div class="menu-list" id="menuList"></div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       ORDER / CART
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="panel" id="order">
+    <div class="order-header">
+      <h2 class="order-header-title">Your <em>order</em></h2>
+      <p class="order-header-sub">Add items from the menu, pick a time, send via WhatsApp.</p>
+    </div>
+
+    <!-- Cart lines — rendered by app.js; qty clicks handled via event delegation -->
+    <div class="order-body" id="orderBody" aria-live="polite"></div>
+
+    <!-- Footer: always visible, disabled by CSS when ordering is closed -->
+    <div class="order-footer">
+      <div class="order-total">
+        <span class="order-total-label">Total</span>
+        <span class="order-total-price" id="orderTotal">€0</span>
+      </div>
+
+      <label class="field-label" for="orderNotes">Notes (optional)</label>
+      <textarea class="notes-input" id="orderNotes" rows="2"
+        placeholder="Allergies, special requests…"></textarea>
+
+      <label class="field-label" for="timeSelect">Collection time</label>
+      <select class="time-select" id="timeSelect">
+        <option value="">Choose a time</option>
+        <!-- Options populated by app.js from config.pickupTimes -->
+      </select>
+
+      <!-- id used by bindEvents() — no onclick attribute -->
+      <button class="btn-whatsapp" id="whatsappBtn">
+        <svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16" fill="white">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+          <path d="M11.999 0C5.373 0 0 5.373 0 12c0 2.119.554 4.107 1.523 5.834L.044 23.956l6.278-1.652A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.626 0 11.999 0zm.001 21.818a9.818 9.818 0 01-5.001-1.366l-.358-.213-3.724.979 1.001-3.638-.234-.373A9.789 9.789 0 012.182 12c0-5.413 4.405-9.818 9.818-9.818 5.413 0 9.818 4.405 9.818 9.818 0 5.414-4.405 9.818-9.818 9.818z"/>
+        </svg>
+        Send order via WhatsApp
+      </button>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       PRIVATE EVENTS
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="panel" id="events">
+    <div class="events-bg" id="eventsBg" aria-hidden="true"></div>
+    <div class="events-content">
+      <p class="section-eyebrow">Private hire</p>
+      <h2 class="events-title">Bring the<br><em>fire</em> to you</h2>
+
+      <!-- Content rendered by app.js from config -->
+      <p class="events-desc" id="eventsDesc"></p>
+      <ul class="events-list" id="eventsList"></ul>
+      <p class="events-meta" id="eventsMeta"></p>
+
+      <a href="#" class="btn-fire" id="eventsBtn" target="_blank" rel="noopener noreferrer">
+        Request event quote
+      </a>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       SOCIAL PROOF
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="panel" id="social">
+    <div class="social-inner">
+      <p class="section-eyebrow">What people are saying</p>
+      <h2 class="social-heading">The <em>word</em></h2>
+
+      <!-- Reviews, grid, social links rendered by app.js -->
+      <div class="reviews-list" id="reviewsList"></div>
+      <div class="insta-grid" id="instaGrid" aria-label="Instagram photo gallery"></div>
+      <div class="social-links" id="socialLinks"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       STICKY BOTTOM NAVIGATION
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <nav class="bottom-bar" aria-label="Main navigation">
+
+    <a class="bar-btn" href="#menu" aria-label="View menu">
+      <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20" stroke-width="1.5">
+        <line x1="3"  y1="6"  x2="21" y2="6"/>
+        <line x1="3"  y1="12" x2="21" y2="12"/>
+        <line x1="3"  y1="18" x2="15" y2="18"/>
+      </svg>
+      Menu
+    </a>
+
+    <a class="bar-btn" href="#today" aria-label="Find us today">
+      <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20" stroke-width="1.5">
+        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+        <circle cx="12" cy="10" r="3"/>
+      </svg>
+      Find
+    </a>
+
+    <div class="bar-order-wrap">
+      <!-- data-scroll-to used by bindEvents() — no onclick attribute -->
+      <button class="bar-btn primary" data-scroll-to="order" aria-label="View your order">
+        <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20" stroke-width="1.5">
+          <circle cx="9"  cy="21" r="1"/>
+          <circle cx="20" cy="21" r="1"/>
+          <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/>
+        </svg>
+        Order
+        <span class="cart-badge" id="cartBadge" aria-live="polite" aria-atomic="true"></span>
+      </button>
+    </div>
+
+  </nav>
+
+  <script src="js/config.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

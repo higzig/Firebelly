@@ -1,0 +1,129 @@
+/* =============================================================================
+   Base — reset, custom properties, layout primitives, snap system
+   ============================================================================= */
+
+/* Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+img, video { display: block; max-width: 100%; }
+button, input, select, textarea { font-family: inherit; }
+a { color: inherit; }
+ul, ol { list-style: none; }
+
+/* Custom properties */
+:root {
+  --ink:         #1a0f05;
+  --cream:       #f7eed8;
+  --cream2:      #efe3c4;
+  --kraft:       #c8a052;
+  --kraft-light: #e8d09a;
+  --fire:        #c94a1a;
+  --fire2:       #e07030;
+  --smoke:       #7a6545;
+  --paper:       #faf3e2;
+  --green:       #25D366;
+
+  /* Bottom nav dimensions — used across components */
+  --bar-h:  64px;
+  --safe-b: env(safe-area-inset-bottom, 0px);
+  --nav-h:  calc(var(--bar-h) + var(--safe-b));
+
+  --radius:      2px;
+  --font-serif:  'Playfair Display', Georgia, serif;
+  --font-sans:   'Josefin Sans', system-ui, sans-serif;
+}
+
+/* Scroll snap container */
+html {
+  scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--ink);
+  color: var(--cream);
+  overflow-x: hidden;
+}
+
+/* =============================================================================
+   Snap panels
+   Each panel occupies exactly one viewport — no min-height, no overflow growth.
+   Scrollable content lives in inner containers, not the panel itself.
+   ============================================================================= */
+.panel {
+  height: 100svh;           /* exactly one screen — TikTok-style snap */
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Panels with internal content scrolling use normal stop so users aren't trapped */
+#menu,
+#order,
+#social,
+#today {
+  scroll-snap-stop: normal;
+}
+
+/* Scrollbar hiding on scrollable inner areas */
+.today-inner::-webkit-scrollbar,
+.menu-list::-webkit-scrollbar,
+.order-body::-webkit-scrollbar,
+.social-inner::-webkit-scrollbar { display: none; }
+
+.today-inner,
+.menu-list,
+.order-body,
+.social-inner { scrollbar-width: none; }
+
+/* =============================================================================
+   Desktop layout — centred mobile column + branded sidebar
+   ============================================================================= */
+@media (min-width: 900px) {
+  /* Full-viewport branded background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 65%, rgba(201, 74, 26, 0.07) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 25%, rgba(200, 160, 82, 0.05) 0%, transparent 50%),
+      var(--ink);
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  /* Panel column */
+  .panel {
+    max-width: 480px;
+    margin-inline: auto;
+    box-shadow: 0 0 100px rgba(0, 0, 0, 0.7);
+  }
+
+  /* Align bottom bar with panel column */
+  .bottom-bar {
+    max-width: 480px;
+    left: 50%;
+    transform: translateX(-50%);
+    right: auto;
+    width: 480px;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

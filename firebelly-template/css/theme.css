@@ -1,0 +1,184 @@
+/* =============================================================================
+   Theme — typography, buttons, badges, shared visual patterns
+   ============================================================================= */
+
+/* Section labels */
+.section-eyebrow {
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--smoke);
+  margin-bottom: 0.4rem;
+}
+
+/* Serif display headings */
+.hero-title,
+.today-heading,
+.menu-hero-title,
+.order-header-title,
+.events-title,
+.social-heading {
+  font-family: var(--font-serif);
+  line-height: 1.0;
+  font-weight: 700;
+}
+
+.hero-title em,
+.today-heading em,
+.menu-hero-title em,
+.order-header-title em,
+.events-title em,
+.social-heading em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--fire2);
+}
+
+/* Primary CTA — fire red */
+.btn-fire {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--fire);
+  color: var(--cream);
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.9rem 1.5rem;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  border-radius: var(--radius);
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+.btn-fire:hover,
+.btn-fire:focus-visible { background: var(--fire2); }
+
+/* Ghost CTA — outlined */
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: transparent;
+  color: var(--kraft-light);
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.9rem 1.5rem;
+  border: 1px solid rgba(200, 160, 82, 0.35);
+  cursor: pointer;
+  text-decoration: none;
+  border-radius: var(--radius);
+  transition: border-color 0.2s, color 0.2s;
+  flex-shrink: 0;
+}
+.btn-ghost:hover,
+.btn-ghost:focus-visible {
+  border-color: var(--kraft);
+  color: var(--cream);
+}
+
+/* WhatsApp send button */
+.btn-whatsapp {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: var(--green);
+  color: white;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border: none;
+  padding: 1rem;
+  cursor: pointer;
+  border-radius: var(--radius);
+  transition: opacity 0.2s;
+}
+.btn-whatsapp:hover,
+.btn-whatsapp:focus-visible { opacity: 0.87; }
+
+/* Focus ring — accessible but unobtrusive */
+:focus-visible {
+  outline: 2px solid var(--kraft);
+  outline-offset: 2px;
+}
+
+/* Item badges */
+.item-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin: 0.25rem 0;
+}
+
+.item-badge {
+  font-size: 0.55rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.45rem;
+  border-radius: 2px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.badge-popular {
+  background: rgba(201, 74, 26, 0.15);
+  color: var(--fire2);
+  border: 1px solid rgba(201, 74, 26, 0.3);
+}
+
+.badge-special {
+  background: rgba(200, 160, 82, 0.15);
+  color: var(--kraft);
+  border: 1px solid rgba(200, 160, 82, 0.3);
+}
+
+.badge-veg {
+  background: rgba(56, 142, 60, 0.15);
+  color: #4caf50;
+  border: 1px solid rgba(56, 142, 60, 0.3);
+}
+
+.badge-spicy {
+  background: rgba(230, 81, 0, 0.15);
+  color: #ff7043;
+  border: 1px solid rgba(230, 81, 0, 0.3);
+}
+
+.badge-gf {
+  background: rgba(100, 150, 100, 0.12);
+  color: #81c784;
+  border: 1px solid rgba(100, 150, 100, 0.25);
+}
+
+/* Sold-out state */
+.is-soldout {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.sold-out-label {
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--smoke);
+  border: 1px solid rgba(122, 101, 69, 0.3);
+  padding: 0.3rem 0.65rem;
+  border-radius: var(--radius);
+}
+
+/* Form field labels */
+.field-label {
+  display: block;
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--smoke);
+  margin-bottom: 0.4rem;
+}
