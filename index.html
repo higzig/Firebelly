@@ -22,12 +22,22 @@
   --bar-h:64px;
 }
 
-html{scroll-behavior:smooth;scroll-snap-type:y mandatory;overflow-y:scroll}
-body{font-family:'Josefin Sans',sans-serif;background:var(--ink);color:var(--cream);overflow-x:hidden;padding-bottom:var(--bar-h)}
+html{scroll-behavior:smooth}
+body{font-family:'Josefin Sans',sans-serif;background:var(--ink);color:var(--cream);overflow:hidden}
+
+/* SNAP CONTAINER */
+.snap-wrap{
+  height:calc(100svh - var(--bar-h));
+  overflow-y:scroll;
+  scroll-snap-type:y mandatory;
+  scroll-behavior:smooth;
+  scrollbar-width:none;
+}
+.snap-wrap::-webkit-scrollbar{display:none}
 
 /* SNAP PANELS */
 .panel{
-  min-height:100svh;
+  height:calc(100svh - var(--bar-h));
   scroll-snap-align:start;
   scroll-snap-stop:always;
   position:relative;
@@ -476,12 +486,159 @@ body{font-family:'Josefin Sans',sans-serif;background:var(--ink);color:var(--cre
 .bar-order-wrap .bar-btn{flex:1}
 
 @media(min-width:600px){
-  .panel{max-width:480px;margin:0 auto}
-  .bottom-bar{max-width:480px;margin:0 auto;left:50%;transform:translateX(-50%)}
+  .panel{max-width:560px;margin:0 auto}
+  .bottom-bar{max-width:560px;margin:0 auto;left:50%;transform:translateX(-50%)}
+}
+
+/* ── DESKTOP NAV ── */
+.desktop-nav{
+  display:none;
+  position:fixed;top:0;left:0;right:0;
+  z-index:600;
+  background:rgba(26,15,5,0.96);
+  border-bottom:1px solid rgba(200,160,82,0.15);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+}
+.desktop-nav-inner{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:1.5rem;
+  max-width:1200px;margin:0 auto;
+  padding:0 2rem;height:64px;
+}
+.desktop-nav-logo{
+  font-family:'Playfair Display',serif;
+  font-size:1.1rem;font-weight:700;
+  color:var(--cream);text-decoration:none;
+  white-space:nowrap;flex-shrink:0;
+}
+.desktop-nav-logo em{font-style:italic;color:var(--fire2)}
+.desktop-nav-links{
+  display:flex;gap:1.75rem;align-items:center;
+  flex:1;justify-content:center;
+}
+.desktop-nav-links a{
+  font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--smoke);text-decoration:none;transition:color 0.2s;
+  white-space:nowrap;
+}
+.desktop-nav-links a:hover{color:var(--kraft-light)}
+.desktop-nav-cta{
+  display:inline-flex;align-items:center;
+  background:var(--fire);color:var(--cream);
+  font-family:'Josefin Sans',sans-serif;
+  font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;
+  padding:0.65rem 1.25rem;border:none;cursor:pointer;transition:background 0.2s;
+  white-space:nowrap;flex-shrink:0;
+}
+.desktop-nav-cta:hover{background:var(--fire2)}
+
+/* ── DESKTOP LAYOUT ── */
+@media(min-width:960px){
+  body{padding-bottom:0;padding-top:64px}
+  .desktop-nav{display:flex}
+  .bottom-bar{display:none}
+  .panel{max-width:none !important;margin:0 !important;height:calc(100svh - 64px)}
+
+  /* Hero */
+  .hero-img{
+    background-image:
+      linear-gradient(to bottom,rgba(26,15,5,0.2) 0%,rgba(26,15,5,0.7) 60%,rgba(26,15,5,0.97) 100%),
+      url('https://images.unsplash.com/photo-1513104890138-7c749659a591?w=1600&q=85');
+  }
+  .hero-content{max-width:1200px;margin:0 auto;width:100%;padding:4rem 4rem 6rem}
+  .hero-title{font-size:clamp(5rem,9vw,9rem)}
+  .hero-sub{max-width:460px;font-size:0.88rem}
+
+  /* Today – 2 col */
+  .today-inner{
+    max-width:1200px;margin:0 auto;padding:5rem 4rem;
+    display:grid;
+    grid-template-columns:3fr 2fr;
+    grid-template-rows:auto auto auto auto;
+    column-gap:4rem;align-items:start;
+  }
+  .today-inner>.section-eyebrow{grid-column:1;grid-row:1}
+  .today-inner>.today-heading{grid-column:1;grid-row:2}
+  .today-inner>.location-now{grid-column:1;grid-row:3;margin-bottom:1rem}
+  .today-inner>.location-next{grid-column:1;grid-row:4}
+  .today-inner>.why-strip{
+    grid-column:2;grid-row:1/5;
+    align-self:center;margin-top:0;
+    grid-template-columns:1fr 1fr;
+  }
+
+  /* Menu – sidebar tabs */
+  #menu{
+    display:grid;
+    grid-template-columns:220px 1fr;
+    grid-template-rows:280px 1fr;
+  }
+  .menu-hero-img{grid-column:1/-1;grid-row:1;height:280px}
+  .menu-tabs{
+    grid-column:1;grid-row:2;
+    flex-direction:column;border-bottom:none;
+    border-right:1px solid rgba(200,160,82,0.15);
+    overflow-x:unset;padding-top:0.5rem;
+  }
+  .menu-tab{
+    text-align:left;padding:1rem 1.5rem;
+    border-bottom:none;
+    border-right:2px solid transparent;
+    margin-bottom:0;margin-right:-1px;
+  }
+  .menu-tab.active{border-bottom-color:transparent;border-right-color:var(--kraft)}
+  .menu-list{grid-column:2;grid-row:2}
+  .menu-panel.active{display:grid;grid-template-columns:1fr 1fr;align-items:start}
+  .menu-note-bar{grid-column:1/-1}
+
+  /* Order – split */
+  #order{
+    display:grid;
+    grid-template-columns:1fr 400px;
+    grid-template-rows:auto 1fr;
+  }
+  .order-header{grid-column:1/-1;padding:2.5rem 4rem}
+  .order-body{grid-column:1;padding:2rem 4rem;overflow-y:auto}
+  .order-footer{
+    grid-column:2;grid-row:2;
+    border-top:none;border-left:1px solid var(--cream2);
+    padding:2rem;align-self:start;
+  }
+
+  /* Events */
+  .events-content{max-width:1200px;margin:0 auto;width:100%;padding:5rem 4rem}
+  .events-desc,.events-list{max-width:540px}
+
+  /* Social */
+  .social-inner{max-width:1200px;margin:0 auto;padding:4rem}
+  .reviews-list{
+    display:grid;grid-template-columns:repeat(3,1fr);
+    gap:1rem;margin-bottom:2rem;
+  }
+  .review-card{margin-bottom:0}
+  .insta-grid{grid-template-columns:repeat(6,1fr)}
+  .social-links{flex-direction:row;gap:1rem}
+  .social-link{flex:1}
 }
 </style>
 </head>
 <body>
+
+<header class="desktop-nav">
+  <div class="desktop-nav-inner">
+    <a href="#hero" class="desktop-nav-logo">Firebelly <em>Pizza</em></a>
+    <nav class="desktop-nav-links">
+      <a href="#today">Find Us</a>
+      <a href="#menu">Menu</a>
+      <a href="#events">Events</a>
+      <a href="#social">Reviews</a>
+    </nav>
+    <button class="desktop-nav-cta" onclick="document.getElementById('order').scrollIntoView({behavior:'smooth'})">Pre-order</button>
+  </div>
+</header>
+
+<div class="snap-wrap">
 
 <!-- ── HERO ── -->
 <section class="panel" id="hero">
@@ -799,6 +956,8 @@ body{font-family:'Josefin Sans',sans-serif;background:var(--ink);color:var(--cre
     </div>
   </div>
 </section>
+
+</div><!-- /.snap-wrap -->
 
 <!-- ── BOTTOM BAR ── -->
 <nav class="bottom-bar">
